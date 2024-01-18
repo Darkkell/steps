@@ -4,40 +4,52 @@
 
 ## How to start
 
-```console
+```sh
 composer create -project laravel/laravel name-project
 ```
 
-```console
+```sh
 php artisan serve
 ```
 
 ## Breeze to auth
 
-```console
+```sh
 composer require laravel/breeze --dev
 ```
 
-```console
+```sh
 php artisan  breeze:install blade --dark
 ```
 
 ## Create database
 
 - on the file .env change the name of DB_DATABASE
-- on DBMS create the database with the same name of before  step
+- on DBMS create the database with the same name of before step
 - on the explorer choose run migrations
 
 ## Lang
 
-```console
-composer require laravel-lang/common -dev
+```sh
+composer require laravel-lang/common --dev
 ```
 
-- add support to español
+- add support to espanish
 
-```console
-php artisan  lang:add es
+```sh
+php artisan lang:add es
+```
+
+- or support  to fr
+
+```sh
+php artisan lang:Add fr
+```
+
+> note: publish always lang on english for default
+
+```sh
+php artisan lang:publish
 ```
 
 ### config app.php to lang
@@ -70,6 +82,11 @@ NAME_VARIABLE=VALUE
 ```php
 env('NAME_VARIABLE', 'DEFAULT_VALUE')
 ```
+
+## best practice
+
+- always add on .env.example when you add  new line on .env
+
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
