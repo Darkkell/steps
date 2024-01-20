@@ -28,6 +28,11 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
+        //validation
+        $request->validate([
+                'tweet'=> ['required', 'min:1','max:255'],
+            ]);
+
         //insert into db
         Tweet::create([
             'message'=>$request->tweet, // $request->get('tweet')

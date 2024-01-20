@@ -288,8 +288,23 @@ Route::method('/url', function(){
 
 ```php
 Route::method('/url', function(){
-    return to_route('name.index')->with('status','message'); //  __('message')
+    return to_route('name.index')->with('status','message'); //  __('message') to i8n
 });
+```
+
+- on controller 👌🏼
+
+```php
+public function nameFunction(){
+    session()->flash('status','message');
+    return to_route('name.index');
+}
+```
+
+```php
+public function nameFunction(){
+    return to_route('name.index')->with('status','message'); //  __('message') to i8n
+}
 ```
 
 - on views
@@ -300,7 +315,91 @@ Route::method('/url', function(){
 @endif
 ```
 
-## controlers
+## controllers
+
+- on routes
+
+```php
+Route::method('/url', [NameController::class, 'function'])->name('name.convention');
+```
+
+- on controller
+
+```php
+public function nameFunction(){
+    //all code
+    return view('name.convention')  //or to_route('name.convention') //with ->('nameSessionFlashMessage', 'value'); // or __('value') to i8n
+}
+```
+
+## form validation
+
+- directive @csrf (cross-site-request-forgery) to prevent  csrf vulnerability
+
+```php
+<form method="method" action="{{route('name.convention')}}">
+    @csrf
+</form>
+```
+
+```php
+$request->validate([
+    'nameToValidate'=>'required', // or rule to validate
+    'nameToValidate'=> ['required', 'min:3'] // rules
+]);
+```
+
+- save value if have error validation of form
+
+```php
+<textarea name="name"> {{old('name')}} </textarea>
+```
+
+### show error msg
+
+- directive of Blade @dump
+
+```php
+@dump($errors) //to see all errors
+
+@dump($errors->get('tweet')) //to see tweet errors
+```
+
+- directive of Blade @error
+
+```php
+@error('name'){{$message}}@enderror
+```
+
+- error to change style
+
+```php
+<a class="@error('name') dark:border-red-300 @enderror">
+```
+
+- x-input-error of brezee
+
+```php
+<x-input-error class="" :messages="$errors->get('name')"
+```
+
+## docs
+
+- tailwind colors
+
+<https://tailwindcss.com/docs/customizing-colors>
+
+- tailwind align
+
+<https://tailwindcss.com/docs/text-align>
+
+- laravel eloquent
+
+<https://laravel.com/docs/10.x/eloquent#inserts>
+
+- laravel validation rules
+
+<https://laravel.com/docs/10.x/validation#available-validation-rules>
 
 ## errors
 
@@ -331,7 +430,7 @@ Route::method('/url', function(){
 
 - solution:
 
-````sql
+```sql
 alter table `tweets` add constraint `tweets_user_id_foreign` foreign key (`user_id`) references `users` (`id`) on delete cascade;
 ```
 
