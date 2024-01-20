@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Models\Tweet;
+use App\Http\Controllers\TweetController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -24,18 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/tweets', function(){
-        return view('tweets.index');
-    })->name('tweets.index');
-    Route::post('/tweets', function(){
-        $tweet = request('tweet');
-        //insert into db
-        Tweet::create([
-            'message'=>$tweet,
-            'user_id'=> auth()->id()
-        ]);
-        return to_route('tweets.index')->with('status',  __('Tweet created'));
-    });
+    Route::get('/tweets', [TweetController::class, 'index'])->name('tweets.index');
+    Route::post('/tweets',[TweetController::class,'store'])->name('tweets.store');
 });
 
 

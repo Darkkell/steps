@@ -12,7 +12,7 @@ class TweetController extends Controller
      */
     public function index()
     {
-        //
+        return view('tweets.index');
     }
 
     /**
@@ -28,7 +28,12 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //insert into db
+        Tweet::create([
+            'message'=>$request->tweet, // $request->get('tweet')
+            'user_id'=> auth()->id()
+        ]);
+        return to_route('tweets.index')->with('status',  __('Tweet created'));
     }
 
     /**
