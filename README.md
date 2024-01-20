@@ -73,7 +73,7 @@ php artisan lang:publish
 
 - to create env variables add the variable on .env with the next sintax:
 
-```console
+```sh
 NAME_VARIABLE=VALUE
 ```
 
@@ -87,6 +87,253 @@ env('NAME_VARIABLE', 'DEFAULT_VALUE')
 
 - always add on .env.example when you add  new line on .env
 
+## routing
+
+- structure:
+
+```php
+Route::method('/url', function(){
+    return //message or view(nameView);
+});
+```
+
+- endpoint with params
+
+```php
+Route::method('/url/{param}', function($variable){
+    return 'message'.$variable;
+});
+```
+
+- optional params
+
+```php
+Route::method('/url/{param?}', function($variable = dafaultValue){
+    return 'message'.$variable;
+});
+```
+
+- redirect
+
+```php
+Route::method('/url/{param?}', function($variable){
+    if($variable == value){
+       return redirect('/url');
+    }
+    return 'message'.$variable;
+});
+```
+
+- endpoint name
+
+```php
+Route::method('/url/{param}', function($variable){
+    return 'message'.$variable;
+})->name('name.index'); // .index .create .show is a convention
+```
+
+- redirect to endpoint name
+
+```php
+Route::method('/url/{param?}', function($variable){
+    if($variable == value){
+       return redirect()->route('name.index');
+    }
+    return 'message'.$variable;
+});
+```
+
+or
+
+```php
+Route::method('/url/{param?}', function($variable){
+    if($variable == value){
+       return to_route('name.index');
+    }
+    return 'message'.$variable;
+});
+```
+
+- only return a view
+
+```php
+Route::view('/url', 'view');
+//or with name
+Route::view('/url', 'view')->name('welcome');
+```
+
+- view all defined routes
+
+```sh
+php artisan route:list
+```
+
+- only on application
+
+```sh
+php artisan route:list --except-vendor
+```
+
+## const Home
+
+- is a constant  route o endpoint to home in this case is '/dashboard'. is ubicate on file RouteServiceProvider
+
+## middleware
+
+- execute something after and before the route is executed
+
+- how to use:
+
+```php
+Route::get('/url', function (){
+    return //function, view o something
+})->middleware(['beforeMiddleware', 'afterMiddleware'])->name('endpointName')
+```
+
+- inheritance middleware
+
+```php
+Route::middleware('nameMiddleware')->group(function(){
+    Route::method('/url', action)->name('endpointName')
+})
+```
+
+## navigation
+
+- on file >resources>views>layouts>navigation.blade.php modify navigation links and responsive navigation menu to include new routes
+
+## make model to db
+
+- create migration and controller:
+
+```sh
+php artisan make:model Name -mrc
+```
+
+## execute migrations
+
+- function up
+
+```sh
+php artisan migrate
+```
+
+- function down of the last lote
+
+```sh
+php artisan migrate:rollback
+```
+
+- function  down of the last #n of migrations
+
+```sh
+php artisan migrate:rollback --step=numberOfMigrations
+```
+
+## what is eloquent (app>Models)
+
+- is a Laravel ORM
+
+## assignable mass on models
+
+- on app>Models>NameModel.php
+
+```php
+class NameModel extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'fillName1',
+        'fillName2'
+    ];
+}
+```
+
+- how to use
+
+```php
+use App\Models\NameModel;
+
+NameModel::operation([
+    'fillName1'=>$variable,
+    'fillName2'=>'value' // or num
+]);
+```
+
+## styles and js
+
+- on runtime
+
+```sh
+npm run dev
+```
+
+- compile styles (Note: Only compile the styles what are when exec the comand)
+
+```sh
+npm run build
+```
+
+## Session flash messages
+
+- on routes
+
+```php
+Route::method('/url', function(){
+    session()->flash('status','message');
+    return to_route('name.index');
+});
+```
+
+```php
+Route::method('/url', function(){
+    return to_route('name.index')->with('status','message'); //  __('message')
+});
+```
+
+- on views
+
+```php
+@if(session('status'))
+    <div class="">{{ session('status')}}</div>
+@endif
+```
+
+## controlers
+
+## errors
+
+```sh
+2024_01_19_222432_create_tweets_table ........... 30ms FAIL
+
+   Illuminate\Database\QueryException
+
+  SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 (Connection: mysql, SQL: alter table `tweets` add constraint `tweets_user_id_foreign` foreign key (`user_id`) references `users` (`id`) on delete )
+
+  at vendor\laravel\framework\src\Illuminate\Database\Connection.php:822
+    818▕                     $this->getName(), $query, $this->prepareBindings($bindings), $e
+    819▕                 );
+    820▕             }
+    821▕
+  ➜ 822▕             throw new QueryException(
+    823▕                 $this->getName(), $query, $this->prepareBindings($bindings), $e
+    824▕             );
+    825▕         }
+    826▕     }
+
+  1   vendor\laravel\framework\src\Illuminate\Database\Connection.php:574
+      PDOException::("SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1")
+
+  2   vendor\laravel\framework\src\Illuminate\Database\Connection.php:574
+      PDO::prepare("alter table `tweets` add constraint `tweets_user_id_foreign` foreign key (`user_id`) references `users` (`id`) on delete ")
+```
+
+- solution:
+
+````sql
+alter table `tweets` add constraint `tweets_user_id_foreign` foreign key (`user_id`) references `users` (`id`) on delete cascade;
+```
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
