@@ -29,15 +29,22 @@ class TweetController extends Controller
     public function store(Request $request)
     {
         //validation
-        $request->validate([
+        $validated = $request->validate([
                 'tweet'=> ['required', 'min:1','max:255'],
             ]);
 
         //insert into db
-        Tweet::create([
-            'message'=>$request->tweet, // $request->get('tweet')
-            'user_id'=> auth()->id()
+
+        // auth()->user()->tweets()->create([
+        // 'message' => $request->get('tweet')
+        // ]);
+
+        //or ->
+
+        $request->user()->tweets()->create([
+            'message' => $request->tweet
         ]);
+
         return to_route('tweets.index')->with('status',  __('Tweet created'));
     }
 
