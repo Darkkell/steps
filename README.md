@@ -411,10 +411,16 @@ eq()
 
 - is -> compare if a model is the actual model
 
-````php
+```php
 @if(auth()->user()->is(tweet->user))
 // or
 @if (auth()->user()->id === $tweet->user_id)
+```
+
+## Policies // policy
+
+```sh
+php artisan make:policy NamePolicy --model=Name
 ```
 
 ## docs
