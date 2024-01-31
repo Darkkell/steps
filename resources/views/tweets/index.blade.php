@@ -10,9 +10,9 @@
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="post" action="{{route('tweets.store')}}">
+                    <form method="POST" action="{{ route('tweets.store') }}">
                         @csrf
-                        <textarea name="tweet"
+                        <textarea name="message"
                                 class="block w-full rounded-md border-gray-300 bg-white shadow-sm transition-colors duration-300 focus:border-indigo-300 focus:ring  focus:ring-indigo-200 focus:ring-opacity-50 dark:border-gray-600
                                 @error('tweet')dark:border-red-300  @enderror
                                 dark:bg-gray-800 dark:text-white dark:focus:border-indigo-300 dark:focus:ring dark:focus:ring-indigo-200 dark:focus:ring-opacity-5"
@@ -37,14 +37,29 @@
                                         {{ $tweet  -> user -> name }}
                                     </span>
                                     <small class="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                                        {{ $tweet -> created_at -> diffForHumans() }} {{--  format('j M Y, g:i  a') --}}
+                                        {{ $tweet -> created_at -> diffForHumans() }}
                                     </small>
+                                    @if ($tweet->created_at != $tweet->updated_at)
+                                        <small class="text-sm text-gray-600 dark:text-gray-400">&middot; {{ __('Edited') }}</small>
+                                    @endif
                                 </div>
-
                             </div>
                             <p class="mt-4 text-lg text-gray-900 dark:text-gray-100">{{ $tweet -> message }}</p>
                         </div>
-
+                        <x-dropdown>
+                            <x-slot name="trigger">
+                                <button>
+                                    <svg class="w-5 h-5 text-gary-500 dark:text-gray-300" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"></path>
+                                    </svg>
+                                </button>
+                            </x-slot>
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('tweets.edit', $tweet)">
+                                    {{ __('Edit Tweet') }}
+                                </x-dropdown-link>
+                            </x-slot>
+                        </x-dropdown>
                     </div>
                 @endforeach
             </div>

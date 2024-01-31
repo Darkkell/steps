@@ -387,6 +387,28 @@ $request->validate([
 
 - to change timezone  you need go to config/app.php to change attribute timezone
 
+## conditional
+
+```php
+@if
+@endif
+```
+
+- !if
+
+```php
+@unless
+@endunless
+```
+
+## functions
+
+- is equal? response with bool
+
+```php
+eq()
+```
+
 ## docs
 
 - tailwind colors

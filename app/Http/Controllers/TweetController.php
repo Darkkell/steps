@@ -33,7 +33,7 @@ class TweetController extends Controller
     {
         //validation
         $validated = $request->validate([
-                'tweet'=> ['required', 'min:1','max:255'],
+                'message'=> ['required', 'min:1','max:255'],
             ]);
 
         //insert into db
@@ -56,7 +56,10 @@ class TweetController extends Controller
      */
     public function edit(Tweet $tweet)
     {
-        //
+        // (Tweer $tweet) => $tweet = Tweet::findOrFail($tweet)
+        return view ('tweets.edit', [
+            'tweet'=> $tweet
+        ]);
     }
 
     /**
@@ -65,6 +68,13 @@ class TweetController extends Controller
     public function update(Request $request, Tweet $tweet)
     {
         //
+         $validated = $request->validate([
+                'message'=> ['required', 'min:1','max:255'],
+            ]);
+
+        $tweet->update($validated);
+
+        return to_route('tweets.index')->with('status', __('Tweet updated successfully!'));
     }
 
     /**
