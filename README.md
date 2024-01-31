@@ -403,10 +403,18 @@ $request->validate([
 
 ## functions
 
-- is equal? response with bool
+- eq -> is equal? response with bool
 
 ```php
 eq()
+```
+
+- is -> compare if a model is the actual model
+
+````php
+@if(auth()->user()->is(tweet->user))
+// or
+@if (auth()->user()->id === $tweet->user_id)
 ```
 
 ## docs

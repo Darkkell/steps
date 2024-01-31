@@ -56,6 +56,9 @@ class TweetController extends Controller
      */
     public function edit(Tweet $tweet)
     {
+        if(auth()->user()->isNot($tweet->user)){
+            abort(403);
+        }
         // (Tweer $tweet) => $tweet = Tweet::findOrFail($tweet)
         return view ('tweets.edit', [
             'tweet'=> $tweet
@@ -68,6 +71,10 @@ class TweetController extends Controller
     public function update(Request $request, Tweet $tweet)
     {
         //
+        if(auth()->user()->isNot($tweet->user)){
+            abort(403);
+        }
+        
          $validated = $request->validate([
                 'message'=> ['required', 'min:1','max:255'],
             ]);

@@ -55,9 +55,11 @@
                                 </button>
                             </x-slot>
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('tweets.edit', $tweet)">
-                                    {{ __('Edit Tweet') }}
-                                </x-dropdown-link>
+                                @if (auth()->user()->is ($tweet->user))
+                                    <x-dropdown-link :href="route('tweets.edit', $tweet)">
+                                        {{ __('Edit Tweet') }}
+                                    </x-dropdown-link>
+                                @endif
                             </x-slot>
                         </x-dropdown>
                     </div>
