@@ -383,6 +383,10 @@ $request->validate([
 <x-input-error class="" :messages="$errors->get('name')"
 ```
 
+## Timezone
+
+- to change timezone  you need go to config/app.php to change attribute timezone
+
 ## docs
 
 - tailwind colors
@@ -400,6 +404,10 @@ $request->validate([
 - laravel validation rules
 
 <https://laravel.com/docs/10.x/validation#available-validation-rules>
+
+- Timezone
+
+<https://www.php.net/manual/en/timezones.america.php>
 
 ## errors
 

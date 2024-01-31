@@ -12,7 +12,10 @@ class TweetController extends Controller
      */
     public function index()
     {
-        return view('tweets.index');
+        return view('tweets.index', [
+            // 'tweets' => Tweet::orderBy('created_at', 'desc')->get(),  //ordenar
+            'tweets' => Tweet::with('user')->latest()->get(), // común
+        ]);
     }
 
     /**
@@ -35,15 +38,7 @@ class TweetController extends Controller
 
         //insert into db
 
-        // auth()->user()->tweets()->create([
-        // 'message' => $request->get('tweet')
-        // ]);
-
-        //or ->
-
-        $request->user()->tweets()->create([
-            'message' => $request->tweet
-        ]);
+        $request->user()->tweets()->create($validated);
 
         return to_route('tweets.index')->with('status',  __('Tweet created'));
     }

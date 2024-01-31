@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TweetController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+DB::listen(function ($query) { //  para visualizar el problema N+1
+    dump($query->sql);
+});
+
+Route::view('/','welcome')->name('welcome');
 
 
 Route::middleware('auth')->group(function () {
