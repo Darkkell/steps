@@ -241,5 +241,7 @@
     "Tweet created":  "Tweet creado",
     "Edit Tweet":  "Editar Tweet",
     "Tweet updated successfully!": "El Tweet se actualizado!",
-    "Edited": "Editado"
+    "Edited": "Editado",
+    "Delete Tweet": "Eliminar Tweet",
+    "Tweet deleted successfully!": "El Tweet se a eliminado!"
 }

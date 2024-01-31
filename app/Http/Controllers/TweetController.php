@@ -88,5 +88,10 @@ class TweetController extends Controller
     public function destroy(Tweet $tweet)
     {
         //
+        $this->authorize('delete', $tweet);
+
+        $tweet->delete();
+
+        return to_route('tweets.index')->with('status', __('Tweet deleted successfully!'));
     }
 }

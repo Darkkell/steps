@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/tweets',[TweetController::class,'store'])->name('tweets.store');
     Route::get('/tweets/{tweet}/edit', [TweetController::class, 'edit'])->name('tweets.edit');
     Route::put('/tweets/{tweet}', [TweetController::class, 'update'])->name('tweets.update');
+    Route::delete('/tweets/{tweet}', [TweetController::class, 'destroy'])->name('tweets.destroy');
 });
 
 
