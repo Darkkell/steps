@@ -423,6 +423,12 @@ eq()
 php artisan make:policy NamePolicy --model=Name
 ```
 
+## vite on production
+
+```sh
+npm run build # to compile
+```
+
 ## docs
 
 - tailwind colors
